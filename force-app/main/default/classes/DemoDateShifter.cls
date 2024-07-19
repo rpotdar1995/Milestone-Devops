@@ -6,7 +6,7 @@
 public without sharing class DemoDateShifter {
     
     public class ObjectItem {
-        @AuraEnabled public Id itemId;
+        @AuraEnabled public Id itemId; // checking
         @AuraEnabled public String itemAPIName;
         @AuraEnabled public String itemLabel;
         @AuraEnabled public String itemLabelPlural;
