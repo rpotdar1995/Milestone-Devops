@@ -22,7 +22,7 @@ jobs:
         run: npm install sfdx-cli --global
 
       - name: Authorize SF Org
-        run: sfdx force:auth:jwt:grant --clientid 3MVG9BriLgWNwNOSNV9MyNQCx8E5w4U8YOiAso40SCoAkXVVNgfCGhyTCBGr0jIzUJG5fTGjC_wrJjAiKGapo --jwtkeyfile ./buildfiles/server.key --username vismaya.v@milestone.tech.main.dev --instanceurl https://login.salesforce.com/ -a Dev
+        run: sfdx force:auth:jwt:grant --clientid 3MVG9BriLgWNwNOSNV9MyNQCx8MP29DTE5kxVLMJqbiQ7lPZx_gPv.U2zKJZEhHTv31VPYvHcWNTfW_.CjVLA --jwtkeyfile ./buildfiles/server.key --username navoniloy.bhaumik@milestone.tech.dev --instanceurl https://login.salesforce.com/ -a Dev
 
       - name: Convert to Deploy Source
         run: sfdx force:source:convert -r ./force-app -d ./toDeploy
@@ -32,3 +32,87 @@ jobs:
 
       - name: Deploy to SF Org
         run: sfdx force:source:deploy -x manifest/package.xml -u Dev
+
+  Int-deploy:
+    runs-on: ubuntu-latest
+    if: endsWith(github.ref, 'Int')
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18
+
+      - name: Install SFDX CLI
+        run: npm install sfdx-cli --global
+
+      - name: Authorize SF Org
+        run: sfdx force:auth:jwt:grant --clientid 3MVG933SC8s3vkAXYEI7A7jtsLUbjCj_EYmnXsBhu6Yv2vKEznKWHiZJlGpff3Y5j72_Y2T8KptZuNIbTYjD9 --jwtkeyfile ./buildfiles/server.key --username selva.kumar@milestone.tech.main.qa --instanceurl https://login.salesforce.com/ -a Int
+
+      - name: Convert to Deploy Source
+        run: sfdx force:source:convert -r ./force-app -d ./toDeploy
+
+      - name: Run Validation on Deploy Source
+        run: sfdx force:source:deploy -c -x manifest/package.xml -u Int
+
+      - name: Deploy to SF Org
+        run: sfdx force:source:deploy -x manifest/package.xml -u Int
+
+  Uat-deploy:
+    runs-on: ubuntu-latest
+    if: endsWith(github.ref, 'Uat')
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18
+
+      - name: Install SFDX CLI
+        run: npm install sfdx-cli --global
+
+      - name: Authorize SF Org
+        run: sfdx force:auth:jwt:grant --clientid 3MVG9BriLgWNwNORkGA7mYj7Wk1a.nZlFUL2koxOoVe225.Kh6DwWcD7PgAb62X2wPMfRprGh6Nbms8KLKLDy --jwtkeyfile ./buildfiles/server.key --username selva.kumar@milestone.tech.main.Uat --instanceurl https://login.salesforce.com/ -a Uat
+
+      - name: Convert to Deploy Source
+        run: sfdx force:source:convert -r ./force-app -d ./toDeploy
+
+      - name: Run Validation on Deploy Source
+        run: sfdx force:source:deploy -c -x manifest/package.xml -u Uat
+
+      - name: Deploy to SF Org
+        run: sfdx force:source:deploy -x manifest/package.xml -u Uat       
+  
+  main-deploy:
+    runs-on: ubuntu-latest
+    if: endsWith(github.ref, 'main')
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18
+
+      - name: Install SFDX CLI
+        run: npm install sfdx-cli --global
+
+      - name: Authorize SF Org
+        run: sfdx force:auth:jwt:grant --clientid 3MVG9kb26yEQGZW38kQM7Uqa0.bZZsk2UewVPbLOYC0Pw6aU254w2AnDWZ0rg8EmzmcucD8qWZ2KWZWNgsJ0R --jwtkeyfile ./buildfiles/server.key --username selva.kumar@milestone.tech.main.Uat --instanceurl https://login.salesforce.com/ -a main
+
+      - name: Convert to Deploy Source
+        run: sfdx force:source:convert -r ./force-app -d ./toDeploy
+
+      - name: Run Validation on Deploy Source
+        run: sfdx force:source:deploy -c -x manifest/package.xml -u main
+
+      - name: Deploy to SF Org
+        run: sfdx force:source:deploy -x manifest/package.xml -u main
