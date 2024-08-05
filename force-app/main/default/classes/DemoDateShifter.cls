@@ -9,7 +9,7 @@ public without sharing class DemoDateShifter {
         @AuraEnabled public Id itemId; // checking
         @AuraEnabled public String itemAPIName;
         @AuraEnabled public String itemLabel;
-        @AuraEnabled public String itemLabelPlural;
+        @AuraEnabled public String itemLabelPlural;//Cheking
         @AuraEnabled public Boolean itemWeekdaysOnly;
         @AuraEnabled public Boolean itemAdjustMinutes;
         @AuraEnabled public Integer itemCount;
