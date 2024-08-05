@@ -22,7 +22,8 @@ jobs:
         run: npm install sfdx-cli --global
 
       - name: Authorize SF Org
-        run: sfdx force:auth:jwt:grant --clientid 3MVG9BriLgWNwNOSNV9MyNQCx8MP29DTE5kxVLMJqbiQ7lPZx_gPv.U2zKJZEhHTv31VPYvHcWNTfW_.CjVLA --jwtkeyfile ./buildfiles/server.key --username navoniloy.bhaumik@milestone.tech.dev --instanceurl https://login.salesforce.com/ -a Dev
+
+        run: sfdx force:auth:jwt:grant --clientid 3MVG9BriLgWNwNOSNV9MyNQCx8FmndGFcXCA20DEgKIZFBhIX63EQemE4pgfYv8rDmEnFhEK3IZpWjBtdLf.T --jwtkeyfile ./buildfiles/server.key --username selva.kumar@milestone.tech.main.dev --instanceurl https://login.salesforce.com/ -a Dev
 
       - name: Convert to Deploy Source
         run: sfdx force:source:convert -r ./force-app -d ./toDeploy
@@ -106,7 +107,9 @@ jobs:
         run: npm install sfdx-cli --global
 
       - name: Authorize SF Org
-        run: sfdx force:auth:jwt:grant --clientid 3MVG9kb26yEQGZW38kQM7Uqa0.bZZsk2UewVPbLOYC0Pw6aU254w2AnDWZ0rg8EmzmcucD8qWZ2KWZWNgsJ0R --jwtkeyfile ./buildfiles/server.key --username selva.kumar@milestone.tech.main.Uat --instanceurl https://login.salesforce.com/ -a main
+
+        run: sfdx force:auth:jwt:grant --clientid 3MVG9kb26yEQGZW38kQM7Uqa0.bZZsk2UewVPbLOYC0Pw6aU254w2AnDWZ0rg8EmzmcucD8qWZ2KWZWNgsJ0R --jwtkeyfile ./buildfiles/server.key --username selva.kumar@milestone.tech.main --instanceurl https://login.salesforce.com/ -a main
+
 
       - name: Convert to Deploy Source
         run: sfdx force:source:convert -r ./force-app -d ./toDeploy
