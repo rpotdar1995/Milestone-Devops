@@ -22,7 +22,9 @@ jobs:
         run: npm install sfdx-cli --global
 
       - name: Authorize SF Org
+
         run: sfdx force:auth:jwt:grant --clientid ${{secrets.ClientId_Dev}} --jwtkeyfile ./buildfiles/server.key --username selva.kumar@milestone.tech.main.dev --instanceurl https://login.salesforce.com/ -a Dev
+
 
       - name: Convert to Deploy Source
         run: sfdx force:source:convert -r ./force-app -d ./toDeploy
