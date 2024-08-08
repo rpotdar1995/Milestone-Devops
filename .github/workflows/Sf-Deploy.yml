@@ -23,7 +23,7 @@ jobs:
 
       - name: Authorize SF Org
 
-        run: sfdx force:auth:jwt:grant --clientid ${{secrets.ClientId_Dev}} --jwtkeyfile ./buildfiles/server.key --username selva.kumar@milestone.tech.main.dev --instanceurl https://login.salesforce.com/ -a Dev
+        run: sfdx force:auth:jwt:grant --clientid ${{secrets.ClientId_Dev}} --jwtkeyfile ./buildfiles/server.key --username selva.kumar@milestone.tech.main.dev --instanceurl ${{vars.Login_URL}} -a Dev
 
       - name: Convert to Deploy Source
         run: sfdx force:source:convert -r ./force-app -d ./toDeploy
@@ -51,7 +51,7 @@ jobs:
         run: npm install sfdx-cli --global
 
       - name: Authorize SF Org
-        run: sfdx force:auth:jwt:grant --clientid ${{secrets.ClientId_Int}} --jwtkeyfile ./buildfiles/server.key --username selva.kumar@milestone.tech.main.qa --instanceurl https://login.salesforce.com/ -a Int
+        run: sfdx force:auth:jwt:grant --clientid ${{secrets.ClientId_Int}} --jwtkeyfile ./buildfiles/server.key --username selva.kumar@milestone.tech.main.qa --instanceurl ${{vars.Login_URL}} -a Int
 
       - name: Convert to Deploy Source
         run: sfdx force:source:convert -r ./force-app -d ./toDeploy
@@ -79,7 +79,7 @@ jobs:
         run: npm install sfdx-cli --global
 
       - name: Authorize SF Org
-        run: sfdx force:auth:jwt:grant --clientid ${{secrets.ClientId_Uat}} --jwtkeyfile ./buildfiles/server.key --username selva.kumar@milestone.tech.main.Uat --instanceurl https://login.salesforce.com/ -a Uat
+        run: sfdx force:auth:jwt:grant --clientid ${{secrets.ClientId_Uat}} --jwtkeyfile ./buildfiles/server.key --username selva.kumar@milestone.tech.main.Uat --instanceurl ${{vars.Login_URL}} -a Uat
 
       - name: Convert to Deploy Source
         run: sfdx force:source:convert -r ./force-app -d ./toDeploy
@@ -108,7 +108,7 @@ jobs:
 
       - name: Authorize SF Org
 
-        run: sfdx force:auth:jwt:grant --clientid ${{secrets.ClientId_main}} --jwtkeyfile ./buildfiles/server.key --username selva.kumar@milestone.tech.main --instanceurl https://login.salesforce.com/ -a main
+        run: sfdx force:auth:jwt:grant --clientid ${{secrets.ClientId_main}} --jwtkeyfile ./buildfiles/server.key --username selva.kumar@milestone.tech.main --instanceurl ${{vars.Login_URL}} -a main
 
 
       - name: Convert to Deploy Source
