@@ -1,0 +1,121 @@
+name: Build and Deploy Salesforce Elements to Org #Author: nbhaumik/Jul-2024
+on:
+  push:
+    branches: [ Dev, Int, Uat, main ]
+  workflow_dispatch:
+
+jobs:
+  DEV-deploy:
+    runs-on: ubuntu-latest
+    if: endsWith(github.ref, 'Dev')
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18
+
+      - name: Install SFDX CLI
+        run: npm install sfdx-cli --global
+
+      - name: Authorize SF Org
+
+        run: sfdx force:auth:jwt:grant --clientid ${{secrets.ClientId_Dev}} --jwtkeyfile ./buildfiles/server.key --username selva.kumar@milestone.tech.main.dev --instanceurl ${{vars.Login_URL}} -a Dev
+
+      - name: Convert to Deploy Source
+        run: sfdx force:source:convert -r ./force-app -d ./toDeploy
+
+      - name: Run Validation on Deploy Source
+        run: sfdx force:source:deploy -c -x manifest/package.xml -u Dev
+
+      - name: Deploy to SF Org
+        run: sfdx force:source:deploy -x manifest/package.xml -u Dev
+
+  Int-deploy:
+    runs-on: ubuntu-latest
+    if: endsWith(github.ref, 'Int')
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18
+
+      - name: Install SFDX CLI
+        run: npm install sfdx-cli --global
+
+      - name: Authorize SF Org
+        run: sfdx force:auth:jwt:grant --clientid ${{secrets.ClientId_Int}} --jwtkeyfile ./buildfiles/server.key --username selva.kumar@milestone.tech.main.qa --instanceurl ${{vars.Login_URL}} -a Int
+
+      - name: Convert to Deploy Source
+        run: sfdx force:source:convert -r ./force-app -d ./toDeploy
+
+      - name: Run Validation on Deploy Source
+        run: sfdx force:source:deploy -c -x manifest/package.xml -u Int
+
+      - name: Deploy to SF Org
+        run: sfdx force:source:deploy -x manifest/package.xml -u Int
+
+  Uat-deploy:
+    runs-on: ubuntu-latest
+    if: endsWith(github.ref, 'Uat')
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18
+
+      - name: Install SFDX CLI
+        run: npm install sfdx-cli --global
+
+      - name: Authorize SF Org
+        run: sfdx force:auth:jwt:grant --clientid ${{secrets.ClientId_Uat}} --jwtkeyfile ./buildfiles/server.key --username selva.kumar@milestone.tech.main.Uat --instanceurl ${{vars.Login_URL}} -a Uat
+
+      - name: Convert to Deploy Source
+        run: sfdx force:source:convert -r ./force-app -d ./toDeploy
+
+      - name: Run Validation on Deploy Source
+        run: sfdx force:source:deploy -c -x manifest/package.xml -u Uat
+
+      - name: Deploy to SF Org
+        run: sfdx force:source:deploy -x manifest/package.xml -u Uat       
+  
+  main-deploy:
+    runs-on: ubuntu-latest
+    if: endsWith(github.ref, 'main')
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18
+
+      - name: Install SFDX CLI
+        run: npm install sfdx-cli --global
+
+      - name: Authorize SF Org
+
+        run: sfdx force:auth:jwt:grant --clientid ${{secrets.ClientId_main}} --jwtkeyfile ./buildfiles/server.key --username selva.kumar@milestone.tech.main --instanceurl ${{vars.Login_URL}} -a main
+
+
+      - name: Convert to Deploy Source
+        run: sfdx force:source:convert -r ./force-app -d ./toDeploy
+
+      - name: Run Validation on Deploy Source
+        run: sfdx force:source:deploy -c -x manifest/package.xml -u main
+
+      - name: Deploy to SF Org
+        run: sfdx force:source:deploy -x manifest/package.xml -u main
